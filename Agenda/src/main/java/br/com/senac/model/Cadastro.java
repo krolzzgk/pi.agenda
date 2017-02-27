@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Karol
+ * @author Karol e Paulo
  */
 public class Cadastro {
 
