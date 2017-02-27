@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Senac - SP
+ * Projeto: Agenda
+ * Desenvolvido por: Ana Paula Gandorin, Karolina Kallajian e Paulo Nunes
+ * Fevereiro - 2017
  */
 package br.com.senac.db.dao;
 
@@ -22,7 +23,7 @@ public class DaoAgenda {
 
         String sql = "INSERT INTO Agenda (Nome, DataDeNascimento, Email, Prefixo, Telefone)"
                 + "VALUES ('" + c.getNome() + ", '"
-                + c.getDataDeNascimento() + ", '"
+                + c.getDataNascimento()+ ", '"
                 + c.getEmail() + ", "
                 + c.getPrefixo() + ", "
                 + c.getTelefone() + ");";
