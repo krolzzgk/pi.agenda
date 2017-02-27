@@ -61,6 +61,13 @@ public class Agenda extends javax.swing.JFrame {
         Label_Telefone.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Label_Telefone.setText("Telefone");
 
+        Campo_DataNasc.setForeground(new java.awt.Color(153, 153, 153));
+        Campo_DataNasc.setText("  /  /");
+
+        Campo_Telefone.setForeground(new java.awt.Color(153, 153, 153));
+        Campo_Telefone.setText("(  )     -");
+        Campo_Telefone.setCaretPosition(1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(

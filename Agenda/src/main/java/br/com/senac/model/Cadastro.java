@@ -16,6 +16,14 @@ public class Cadastro {
     private String email;
     private int prefixo;
     private int telefone;
+    
+    public Cadastro(String nome, String dataDeNascimento, String email, int prefixo, int telefone) {
+        this.nome = nome;
+        this.dataDeNascimento = dataDeNascimento;
+        this.email = email;
+        this.prefixo = prefixo;
+        this.telefone = telefone;
+    }
 
     public String getNome() {
         return nome;
