@@ -5,12 +5,15 @@
  */
 package br.com.senac.views;
 
+import javax.lang.model.type.NoType;
+
 /**
  *
  * @author Nuneez
  */
 public class Agenda extends javax.swing.JFrame {
-
+    
+    
     /**
      * Creates new form Agenda
      */
@@ -27,21 +30,57 @@ public class Agenda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Label_BoasVindas = new javax.swing.JLabel();
+        Botao_TelaCadastrar = new javax.swing.JButton();
+        Botao_TelaPesquisar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        Label_BoasVindas.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        Label_BoasVindas.setText("Bem Vindo");
+
+        Botao_TelaCadastrar.setText("Cadastrar");
+        Botao_TelaCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Botao_TelaCadastrarActionPerformed(evt);
+            }
+        });
+
+        Botao_TelaPesquisar.setText("Pesquisar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(Botao_TelaCadastrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Botao_TelaPesquisar)
+                .addGap(54, 54, 54))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(Label_BoasVindas)
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(Label_BoasVindas)
+                .addGap(92, 92, 92)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Botao_TelaCadastrar)
+                    .addComponent(Botao_TelaPesquisar))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void Botao_TelaCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Botao_TelaCadastrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Botao_TelaCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +118,8 @@ public class Agenda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Botao_TelaCadastrar;
+    private javax.swing.JButton Botao_TelaPesquisar;
+    private javax.swing.JLabel Label_BoasVindas;
     // End of variables declaration//GEN-END:variables
 }
