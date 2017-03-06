@@ -5,6 +5,12 @@
  */
 package br.com.senac.view.principal;
 
+import br.com.senac.model.Cadastro;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author AnaPaula
@@ -47,6 +53,12 @@ public class CadastrarContato extends javax.swing.JInternalFrame {
 
         dadosContato.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados do Contato"));
 
+        campoNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoNomeActionPerformed(evt);
+            }
+        });
+
         nome.setText("Nome");
 
         dataNasc.setText("Data de Nasc");
@@ -56,8 +68,18 @@ public class CadastrarContato extends javax.swing.JInternalFrame {
         email.setText("E-mail");
 
         salvar.setText("Salvar");
+        salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarActionPerformed(evt);
+            }
+        });
 
         cancelar.setText("Cancelar");
+        cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout dadosContatoLayout = new javax.swing.GroupLayout(dadosContato);
         dadosContato.setLayout(dadosContatoLayout);
@@ -136,7 +158,40 @@ public class CadastrarContato extends javax.swing.JInternalFrame {
         setBounds(250, 10, 400, 316);
     }// </editor-fold>//GEN-END:initComponents
 
+   
+    private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
+       Cadastro cadastro = new Cadastro(campoNome.getText(), 
+                                        campoDataNasc.getText(),
+                                        campoEmail.getText(),
+                                        prefixoTelefone.getText(),
+                                        numeroTelefone.getText());
+    }//GEN-LAST:event_salvarActionPerformed
 
+    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
+        int resposta;
+        resposta = JOptionPane.showConfirmDialog(rootPane, "Deseja cancelar?", "Deseja cancelar?", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            limparCampos();
+            this.dispose();
+        }
+        if (resposta == JOptionPane.NO_OPTION) {
+            remove(resposta);
+        }
+                                           
+    }//GEN-LAST:event_cancelarActionPerformed
+
+    private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoNomeActionPerformed
+
+    private void limparCampos() {
+        campoNome.setText(null);
+        prefixoTelefone.setText(null);
+        numeroTelefone.setText(null);
+        campoEmail.setText(null);
+        campoDataNasc.setText(null);
+        campoDataNasc.setValue(null);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField campoDataNasc;
     private javax.swing.JTextField campoEmail;

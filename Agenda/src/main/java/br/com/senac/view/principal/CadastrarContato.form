@@ -130,6 +130,9 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="campoNome">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoNomeActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="campoDataNasc">
         </Component>
@@ -161,11 +164,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Salvar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salvarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="cancelar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="numeroTelefone">
         </Component>
