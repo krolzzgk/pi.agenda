@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Senac - SP
+ * Projeto: Agenda
+ * Desenvolvido por: Ana Paula Gandorin, Karolina Kallajian e Paulo Nunes
+ * Março - 2017
  */
 package br.com.senac.view;
 

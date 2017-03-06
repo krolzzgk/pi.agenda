@@ -2,7 +2,7 @@
  * Senac - SP
  * Projeto: Agenda
  * Desenvolvido por: Ana Paula Gandorin, Karolina Kallajian e Paulo Nunes
- * Fevereiro - 2017
+ * Março - 2017
  */
 package br.com.senac.servico;
 
