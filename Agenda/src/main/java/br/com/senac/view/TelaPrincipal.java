@@ -5,6 +5,11 @@
  */
 package br.com.senac.view;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import javax.imageio.ImageIO;
+
 /**
  *
  * @author AnaPaula
@@ -27,7 +32,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jdpPrincipal = new javax.swing.JDesktopPane();
+        jdpPrincipal = new javax.swing.JDesktopPane(){
+            private Image image;
+            {
+                try {
+                    image = ImageIO.read(new File("src/main/java/br/com/senac/resources/bg.jpg"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
         menuPrincipal = new javax.swing.JMenuBar();
         contatos = new javax.swing.JMenu();
         cadastrar = new javax.swing.JMenuItem();
