@@ -5,6 +5,10 @@
  */
 package br.com.senac.view;
 
+import br.com.senac.servico.ListaServico;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author AnaPaula
@@ -37,18 +41,23 @@ public class Listar extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Lista de Contatos");
 
-        menuOpcao.setBorder(javax.swing.BorderFactory.createTitledBorder("Opção"));
+        menuOpcao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opção", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16))); // NOI18N
 
         mostrarLista.setText("Mostrar Lista");
+        mostrarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarListaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout menuOpcaoLayout = new javax.swing.GroupLayout(menuOpcao);
         menuOpcao.setLayout(menuOpcaoLayout);
         menuOpcaoLayout.setHorizontalGroup(
             menuOpcaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuOpcaoLayout.createSequentialGroup()
-                .addGap(133, 133, 133)
+                .addGap(130, 130, 130)
                 .addComponent(mostrarLista)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
         menuOpcaoLayout.setVerticalGroup(
             menuOpcaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -57,14 +66,14 @@ public class Listar extends javax.swing.JInternalFrame {
                 .addGap(0, 11, Short.MAX_VALUE))
         );
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Todos os Contatos"));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Todos os Contatos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
         gridLista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "Data de Nasc", "Telefone", "E-mail"
+                "Nome", "Data de Nasc", "E-mail", "Prefixo", "Telefone"
             }
         ));
         jScrollPane1.setViewportView(gridLista);
@@ -75,10 +84,10 @@ public class Listar extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(menuOpcao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menuOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,12 +95,25 @@ public class Listar extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(menuOpcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                .addGap(17, 17, 17))
         );
 
         setBounds(250, 10, 433, 456);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mostrarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarListaActionPerformed
+        try {
+            DefaultTableModel model = (DefaultTableModel) gridLista.getModel();
+            model.setRowCount(0);
+            ArrayList<Object[]> agenda = ListaServico.gerarLista();
+            for (Object[] o : agenda) {
+                model.addRow(o);
+            }
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_mostrarListaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

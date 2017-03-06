@@ -23,8 +23,8 @@ public class Cadastro {
     private String DataNascimento;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private String email;
-    private String prefixo;
-    private String telefone;
+    private int prefixo;
+    private int telefone;
     private String DataCadastro;
 
     public String getNome() {
@@ -62,19 +62,19 @@ public class Cadastro {
         this.email = email;
     }
 
-    public String getPrefixo() {
+    public int getPrefixo() {
         return prefixo;
     }
 
-    public void setPrefixo(String prefixo) {
+    public void setPrefixo(int prefixo) {
         this.prefixo = prefixo;
     }
 
-    public String getTelefone() {
+    public int getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(int telefone) {
         this.telefone = telefone;
     }
     
@@ -102,8 +102,8 @@ public class Cadastro {
                 String nome, 
                 String DataNascimento, 
                 String email, 
-                String prefixo, 
-                String telefone){        
+                int prefixo, 
+                int telefone){        
         this.nome = nome;
         this.DataNascimento = DataNascimento;
         this.email = email;

@@ -5,7 +5,10 @@
  */
 package br.com.senac.view;
 
+import br.com.senac.db.dao.DaoAgenda;
 import br.com.senac.model.Cadastro;
+import br.com.senac.servico.CadastroException;
+import br.com.senac.servico.CadastroServico;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,13 +54,13 @@ public class CadastrarContato extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Cadastro de Contatos");
 
-        dadosContato.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados do Contato"));
+        dadosContato.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados do Contato", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16))); // NOI18N
 
-        campoNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoNomeActionPerformed(evt);
-            }
-        });
+        try {
+            campoDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         nome.setText("Nome");
 
@@ -91,25 +94,22 @@ public class CadastrarContato extends javax.swing.JInternalFrame {
                     .addComponent(dataNasc)
                     .addComponent(telefone)
                     .addComponent(email))
-                .addGroup(dadosContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(40, 40, 40)
+                .addGroup(dadosContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(dadosContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(dadosContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(campoDataNasc, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(dadosContatoLayout.createSequentialGroup()
+                                .addComponent(prefixoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(numeroTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(dadosContatoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(salvar)
-                        .addGap(18, 18, 18)
-                        .addComponent(cancelar)
-                        .addGap(26, 26, 26))
-                    .addGroup(dadosContatoLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(dadosContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(dadosContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(campoDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(dadosContatoLayout.createSequentialGroup()
-                                    .addComponent(prefixoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(numeroTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 14, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelar)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         dadosContatoLayout.setVerticalGroup(
             dadosContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,11 +131,10 @@ public class CadastrarContato extends javax.swing.JInternalFrame {
                 .addGroup(dadosContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(email))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(dadosContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(salvar)
-                    .addComponent(cancelar))
-                .addGap(23, 23, 23))
+                    .addComponent(cancelar)
+                    .addComponent(salvar)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -158,13 +157,33 @@ public class CadastrarContato extends javax.swing.JInternalFrame {
         setBounds(250, 10, 400, 316);
     }// </editor-fold>//GEN-END:initComponents
 
-   
+
     private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
-       Cadastro cadastro = new Cadastro(campoNome.getText(), 
-                                        campoDataNasc.getText(),
-                                        campoEmail.getText(),
-                                        prefixoTelefone.getText(),
-                                        numeroTelefone.getText());
+        try {
+            CadastroServico.validarNome(campoNome.getText());
+            CadastroServico.validarDataNascimento(campoDataNasc.getText());
+            CadastroServico.validarEmail(campoEmail.getText());
+            int prefixo = CadastroServico.validarPrefixo(prefixoTelefone.getText());
+            int tel = CadastroServico.validarTelefone(numeroTelefone.getText());
+
+            Date dtFormat = new SimpleDateFormat("dd/mm/yyyy").parse((String) campoDataNasc.getText());
+            String dtNasc = new SimpleDateFormat("yyyy-MM-dd").format(dtFormat);
+
+            Cadastro cadastro = new Cadastro(campoNome.getText(), dtNasc, campoEmail.getText(), prefixo, tel);
+
+            DaoAgenda.cadastrar(cadastro);
+
+            limparCampos();
+            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!", "Mensagem", JOptionPane.DEFAULT_OPTION);
+
+        } catch (CadastroException cx) {
+            JOptionPane.showMessageDialog(null, cx.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+        } catch (ParseException px) {
+            JOptionPane.showMessageDialog(null, "Falha na Data de Nascimento.", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Falha ao cadastrar.", "Atenção", JOptionPane.WARNING_MESSAGE);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_salvarActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
@@ -177,12 +196,8 @@ public class CadastrarContato extends javax.swing.JInternalFrame {
         if (resposta == JOptionPane.NO_OPTION) {
             remove(resposta);
         }
-                                           
-    }//GEN-LAST:event_cancelarActionPerformed
 
-    private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoNomeActionPerformed
+    }//GEN-LAST:event_cancelarActionPerformed
 
     private void limparCampos() {
         campoNome.setText(null);

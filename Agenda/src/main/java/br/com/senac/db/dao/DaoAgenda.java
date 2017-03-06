@@ -9,6 +9,7 @@ package br.com.senac.db.dao;
 import br.com.senac.db.utils.ConnectionUtils;
 import br.com.senac.model.Cadastro;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -18,16 +19,30 @@ import java.sql.Statement;
  */
 public class DaoAgenda {
 
-    public static void cadastrar(Cadastro c)
-            throws SQLException, Exception {
+    private static Connection conexao = null;
 
-        String sql = "INSERT INTO Agenda (Nome, DataDeNascimento, Email, Prefixo, Telefone)"
-                + "VALUES ('" + c.getNome() + ", '"
-                + c.getDataNascimento()+ ", '"
-                + c.getEmail() + ", "
-                + c.getPrefixo() + ", "
-                + c.getTelefone() + ");";
-                
+    public static void cadastrar(Cadastro c) throws SQLException, Exception {
+
+        String sql = "INSERT INTO Agenda (Nome, DataDeNascimento, Email, Prefixo, Telefone, DataCadastro)"
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement statementCadastro = null;
+
+        try {
+            conexao = ConnectionUtils.getConnection();
+            statementCadastro = conexao.prepareStatement(sql);
+            statementCadastro.setString(1, c.getNome());
+            statementCadastro.setDate(2, c.getDataNascimentoSQL());
+            statementCadastro.setString(3, c.getEmail());
+            statementCadastro.setInt(4, c.getPrefixo());
+            statementCadastro.setInt(5, c.getTelefone());
+            statementCadastro.setDate(6, c.getDataCadastroSQL());
+        } catch (Exception e) {
+
+        }
+
+        statementCadastro.execute();
+
     }
 
     private static void executarSQL(String sql) throws SQLException, Exception {
@@ -55,4 +70,3 @@ public class DaoAgenda {
         }
     }
 }
-

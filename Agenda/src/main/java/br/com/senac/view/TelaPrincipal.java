@@ -5,10 +5,14 @@
  */
 package br.com.senac.view;
 
+import br.com.senac.servico.Util;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,11 +20,50 @@ import javax.imageio.ImageIO;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 
+    CadastrarContato cadastro = null;
+    Listar lista = null;
+
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        checkDs();
+    }
+
+    private void checkDs() {
+        boolean isConnected = false;
+        do {
+
+            if (Util.checkConnection()) {
+
+                isConnected = true;
+                break;
+            }
+
+            int resposta = JOptionPane.showConfirmDialog(rootPane, "Não foi "
+                    + "possível estabelecer conexão com banco de dados. \n"
+                    + "Verifique se o servidor foi iniciado "
+                    + "e tente novamente.\n\n"
+                    + "Pressione \"Sim\" para tentar se conectar a fonte de "
+                    + "dados novamente.", "Sem fonte de dados",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (resposta == JOptionPane.NO_OPTION
+                    || resposta == JOptionPane.CLOSED_OPTION) {
+                System.exit(0);
+            }
+        } while (!isConnected);
+    }
+
+    public void openFrameInCenter(JInternalFrame jif) {
+        Dimension desktopSize = desktop.getSize();
+        Dimension jInternalFrameSize = jif.getSize();
+        int width = (desktopSize.width - jInternalFrameSize.width) / 2;
+        int height = (desktopSize.height - jInternalFrameSize.height) / 2;
+        jif.setLocation(width, height);
+        jif.setVisible(true);
     }
 
     /**
@@ -32,11 +75,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jdpPrincipal = new javax.swing.JDesktopPane(){
+        desktop = new javax.swing.JDesktopPane(){
             private Image image;
             {
                 try {
-                    image = ImageIO.read(new File("src/main/java/br/com/senac/resources/bg.jpg"));
+                    image = ImageIO.read(new File("src/main/java/br/com/senac/resources/logo00.jpg"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -56,19 +99,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Agenda de Contatos");
 
-        javax.swing.GroupLayout jdpPrincipalLayout = new javax.swing.GroupLayout(jdpPrincipal);
-        jdpPrincipal.setLayout(jdpPrincipalLayout);
-        jdpPrincipalLayout.setHorizontalGroup(
-            jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout desktopLayout = new javax.swing.GroupLayout(desktop);
+        desktop.setLayout(desktopLayout);
+        desktopLayout.setHorizontalGroup(
+            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 867, Short.MAX_VALUE)
         );
-        jdpPrincipalLayout.setVerticalGroup(
-            jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 504, Short.MAX_VALUE)
+        desktopLayout.setVerticalGroup(
+            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 491, Short.MAX_VALUE)
         );
 
         contatos.setText("Contatos");
+        contatos.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
+        cadastrar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         cadastrar.setText("Cadastrar");
         cadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +122,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         contatos.add(cadastrar);
 
+        listar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         listar.setText("Listar");
         listar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,11 +139,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jdpPrincipal)
+            .addComponent(desktop)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jdpPrincipal)
+            .addComponent(desktop)
         );
 
         setSize(new java.awt.Dimension(883, 564));
@@ -105,15 +151,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarActionPerformed
-        CadastrarContato obj = new CadastrarContato();
-        jdpPrincipal.add(obj);
-        obj.setVisible(true);
+        if (cadastro == null || !cadastro.isDisplayable()) {
+            cadastro = new CadastrarContato();
+            desktop.add(cadastro);
+            this.openFrameInCenter(cadastro);
+        }
+        cadastro.moveToFront();
     }//GEN-LAST:event_cadastrarActionPerformed
 
     private void listarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarActionPerformed
-        Listar obj = new Listar();
-        jdpPrincipal.add(obj);
-        obj.setVisible(true);
+        if (lista == null || !lista.isDisplayable()) {
+            lista = new Listar();
+            desktop.add(lista);
+            this.openFrameInCenter(lista);
+        }
+        lista.moveToFront();
     }//GEN-LAST:event_listarActionPerformed
 
     /**
@@ -154,7 +206,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem cadastrar;
     private javax.swing.JMenu contatos;
-    private javax.swing.JDesktopPane jdpPrincipal;
+    private javax.swing.JDesktopPane desktop;
     private javax.swing.JMenuItem listar;
     private javax.swing.JMenuBar menuPrincipal;
     // End of variables declaration//GEN-END:variables
